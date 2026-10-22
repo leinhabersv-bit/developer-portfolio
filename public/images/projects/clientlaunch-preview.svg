@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="auto">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="60%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#080c14"/>
+    </linearGradient>
+    <linearGradient id="cyan-v" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+
+  <!-- Browser Shell Mockup -->
+  <g transform="translate(100, 75)">
+    <!-- Window Frame -->
+    <rect width="1000" height="525" rx="14" fill="#0f1422" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1.5"/>
+    <rect width="1000" height="44" rx="14" fill="#141c2e"/>
+    <!-- Controls -->
+    <circle cx="28" cy="22" r="6" fill="#ef4444" opacity="0.8"/>
+    <circle cx="48" cy="22" r="6" fill="#f59e0b" opacity="0.8"/>
+    <circle cx="68" cy="22" r="6" fill="#10b981" opacity="0.8"/>
+    <rect x="180" y="10" width="640" height="24" rx="6" fill="rgba(255, 255, 255, 0.05)"/>
+    <text x="500" y="26" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#64748b">clientlaunch.vercel.app • local-first offline vault</text>
+
+    <!-- App Header Inside -->
+    <rect x="30" y="70" width="940" height="70" rx="8" fill="#172136" stroke="rgba(255,255,255,0.06)"/>
+    <text x="55" y="112" font-family="-apple-system, sans-serif" font-size="22" font-weight="800" fill="#ffffff">ClientLaunch</text>
+    <text x="210" y="112" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#38bdf8">COMMERCIAL SMM SUITE</text>
+    <rect x="800" y="88" width="145" height="34" rx="6" fill="rgba(56, 189, 248, 0.1)" stroke="rgba(56, 189, 248, 0.3)"/>
+    <text x="872" y="110" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#38bdf8">100% OFFLINE</text>
+
+    <!-- Module Cards -->
+    <!-- Card 1: Proposal Studio -->
+    <g transform="translate(30, 165)">
+      <rect width="295" height="330" rx="8" fill="#131b2e" stroke="rgba(255,255,255,0.06)"/>
+      <rect width="295" height="4" fill="#38bdf8"/>
+      <text x="24" y="40" font-family="-apple-system, sans-serif" font-size="16" font-weight="700" fill="#ffffff">Proposal Studio</text>
+      <text x="24" y="68" font-family="-apple-system, sans-serif" font-size="13" fill="#94a3b8">Interactive Retainer Calculator</text>
+      <line x1="24" y1="90" x2="271" y2="90" stroke="rgba(255,255,255,0.08)"/>
+      <text x="24" y="125" font-family="-apple-system, sans-serif" font-size="12" fill="#64748b">Deliverable Scope Tiers</text>
+      <rect x="24" y="140" width="247" height="36" rx="6" fill="#1b253d"/>
+      <text x="38" y="163" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" fill="#00f5d4">$2,450 / month</text>
+      <text x="24" y="215" font-family="-apple-system, sans-serif" font-size="12" fill="#64748b">IndexedDB Local Storage</text>
+      <text x="24" y="240" font-family="-apple-system, sans-serif" font-size="12" fill="#10b981">● Zero Cloud DB Leakage</text>
+    </g>
+
+    <!-- Card 2: Agreement Engine -->
+    <g transform="translate(352, 165)">
+      <rect width="295" height="330" rx="8" fill="#131b2e" stroke="rgba(255,255,255,0.06)"/>
+      <rect width="295" height="4" fill="#818cf8"/>
+      <text x="24" y="40" font-family="-apple-system, sans-serif" font-size="16" font-weight="700" fill="#ffffff">Agreement Generator</text>
+      <text x="24" y="68" font-family="-apple-system, sans-serif" font-size="13" fill="#94a3b8">Digital Signing &amp; Templates</text>
+      <line x1="24" y1="90" x2="271" y2="90" stroke="rgba(255,255,255,0.08)"/>
+      <text x="24" y="125" font-family="-apple-system, sans-serif" font-size="12" fill="#64748b">Legal Clause Enforcement</text>
+      <rect x="24" y="140" width="247" height="36" rx="6" fill="#1b253d"/>
+      <text x="38" y="163" font-family="'JetBrains Mono', monospace" font-size="13" fill="#e2e8f0">Verified SMM Terms</text>
+      <text x="24" y="215" font-family="-apple-system, sans-serif" font-size="12" fill="#64748b">Signature Capture</text>
+      <text x="24" y="240" font-family="-apple-system, sans-serif" font-size="12" fill="#38bdf8">● Single-Click PDF Export</text>
+    </g>
+
+    <!-- Card 3: Vault Backup -->
+    <g transform="translate(675, 165)">
+      <rect width="295" height="330" rx="8" fill="#131b2e" stroke="rgba(255,255,255,0.06)"/>
+      <rect width="295" height="4" fill="#c084fc"/>
+      <text x="24" y="40" font-family="-apple-system, sans-serif" font-size="16" font-weight="700" fill="#ffffff">JSON Vault Cockpit</text>
+      <text x="24" y="68" font-family="-apple-system, sans-serif" font-size="13" fill="#94a3b8">Portable Data Sovereignty</text>
+      <line x1="24" y1="90" x2="271" y2="90" stroke="rgba(255,255,255,0.08)"/>
+      <text x="24" y="125" font-family="-apple-system, sans-serif" font-size="12" fill="#64748b">Automated Snapshots</text>
+      <rect x="24" y="140" width="247" height="36" rx="6" fill="#1b253d"/>
+      <text x="38" y="163" font-family="'JetBrains Mono', monospace" font-size="13" fill="#c084fc">clientlaunch_vault.json</text>
+      <text x="24" y="215" font-family="-apple-system, sans-serif" font-size="12" fill="#64748b">E2E Verification</text>
+      <text x="24" y="240" font-family="-apple-system, sans-serif" font-size="12" fill="#a855f7">● Playwright Tested</text>
+    </g>
+  </g>
+</svg>

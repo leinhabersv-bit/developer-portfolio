@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="auto">
+  <defs>
+    <linearGradient id="ml-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#080c14"/>
+    </linearGradient>
+    <pattern id="ml-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#ml-bg)"/>
+  <rect width="1200" height="675" fill="url(#ml-grid)"/>
+
+  <g transform="translate(100, 75)">
+    <rect width="1000" height="525" rx="14" fill="#0f1422" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1.5"/>
+    <rect width="1000" height="44" rx="14" fill="#141c2e"/>
+    <circle cx="28" cy="22" r="6" fill="#ef4444" opacity="0.8"/>
+    <circle cx="48" cy="22" r="6" fill="#f59e0b" opacity="0.8"/>
+    <circle cx="68" cy="22" r="6" fill="#10b981" opacity="0.8"/>
+    <rect x="180" y="10" width="640" height="24" rx="6" fill="rgba(255, 255, 255, 0.05)"/>
+    <text x="500" y="26" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#64748b">Mic-learning-path • prerequisite DAG unlock engine</text>
+
+    <!-- Header -->
+    <rect x="30" y="70" width="940" height="70" rx="8" fill="#172136" stroke="rgba(255,255,255,0.06)"/>
+    <text x="55" y="112" font-family="-apple-system, sans-serif" font-size="22" font-weight="800" fill="#ffffff">MIC LearnPath</text>
+    <text x="240" y="112" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#00f5d4">PREREQUISITE DAG TRACKER</text>
+
+    <!-- DAG Visual Nodes -->
+    <g transform="translate(30, 170)">
+      <!-- Track Selector -->
+      <rect x="0" y="0" width="160" height="40" rx="8" fill="#00f5d4" opacity="0.2"/>
+      <text x="80" y="25" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="700" fill="#00f5d4">☁ Cloud Track</text>
+
+      <rect x="180" y="0" width="160" height="40" rx="8" fill="#182238"/>
+      <text x="260" y="25" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#94a3b8">🤖 AI &amp; Data</text>
+
+      <rect x="360" y="0" width="160" height="40" rx="8" fill="#182238"/>
+      <text x="440" y="25" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#94a3b8">🔒 Security</text>
+
+      <!-- Node 1: Completed -->
+      <g transform="translate(0, 75)">
+        <rect width="280" height="180" rx="10" fill="#131b2e" stroke="#10b981" stroke-width="2"/>
+        <text x="20" y="35" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#10b981">✓ COMPLETED</text>
+        <text x="20" y="70" font-family="-apple-system, sans-serif" font-size="16" font-weight="700" fill="#ffffff">Describe Cloud Concepts</text>
+        <text x="20" y="98" font-family="-apple-system, sans-serif" font-size="12" fill="#94a3b8">Core benefits &amp; cloud types.</text>
+        <rect x="20" y="125" width="240" height="32" rx="6" fill="#10b981" opacity="0.15"/>
+        <text x="140" y="145" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#10b981">Prerequisites Met</text>
+      </g>
+
+      <!-- Arrow 1 to 2 -->
+      <path d="M 290 165 L 340 165" stroke="#00f5d4" stroke-width="2.5" stroke-dasharray="4,4"/>
+
+      <!-- Node 2: Ready to Start (Unlocked) -->
+      <g transform="translate(350, 75)">
+        <rect width="280" height="180" rx="10" fill="#131b2e" stroke="#00f5d4" stroke-width="2"/>
+        <text x="20" y="35" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#00f5d4">● READY TO START</text>
+        <text x="20" y="70" font-family="-apple-system, sans-serif" font-size="16" font-weight="700" fill="#ffffff">Azure Architecture</text>
+        <text x="20" y="98" font-family="-apple-system, sans-serif" font-size="12" fill="#94a3b8">Subscriptions, regions &amp; RG.</text>
+        <rect x="20" y="125" width="240" height="32" rx="6" fill="#00f5d4"/>
+        <text x="140" y="145" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#080c14">Mark Complete</text>
+      </g>
+
+      <!-- Arrow 2 to 3 -->
+      <path d="M 640 165 L 690 165" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+
+      <!-- Node 3: Locked -->
+      <g transform="translate(700, 75)">
+        <rect width="240" height="180" rx="10" fill="#101726" stroke="rgba(255,255,255,0.08)"/>
+        <text x="20" y="35" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#64748b">🔒 LOCKED</text>
+        <text x="20" y="70" font-family="-apple-system, sans-serif" font-size="16" font-weight="700" fill="#64748b">Azure Compute &amp; Net</text>
+        <text x="20" y="98" font-family="-apple-system, sans-serif" font-size="12" fill="#475569">Requires Architecture.</text>
+      </g>
+    </g>
+  </g>
+</svg>
