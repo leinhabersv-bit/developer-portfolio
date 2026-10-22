@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://rithiksv.dev/sitemap.xml",
+    sitemap: "https://developer-portfolio-eta-steel.vercel.app/sitemap.xml",
   };
 }

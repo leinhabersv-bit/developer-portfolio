@@ -15,7 +15,9 @@ export function ThreeHero() {
     let renderer: THREE.WebGLRenderer;
     try {
       const canvas = document.createElement("canvas");
-      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      const gl =
+        canvas.getContext("webgl") ||
+        canvas.getContext("experimental-webgl");
       if (!gl) {
         window.requestAnimationFrame(() => setWebglSupported(false));
         return;
@@ -31,70 +33,112 @@ export function ThreeHero() {
       return;
     }
 
-    // 2. Scene, Camera, Renderer Setup
+    // 2. Scene, Camera, Viewport Setup
     const width = container.clientWidth || 400;
     const height = container.clientHeight || 400;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.z = 4.2;
+    camera.position.z = 4.4;
 
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.25;
     container.appendChild(renderer.domElement);
 
-    // 3. Geometries & Materials: Futuristic Architectural Cage
+    // 3. Dynamic Studio Lights
+    const ambientLight = new THREE.AmbientLight(0x070b14, 2.0);
+    scene.add(ambientLight);
+
+    const cyanLight = new THREE.PointLight(0x00f5d4, 3.2, 12);
+    cyanLight.position.set(3, 3, 3);
+    scene.add(cyanLight);
+
+    const violetLight = new THREE.PointLight(0xa855f7, 2.6, 12);
+    violetLight.position.set(-3, -2, 2);
+    scene.add(violetLight);
+
+    // 4. Engineering Core Architecture (Group)
     const group = new THREE.Group();
     scene.add(group);
 
-    // Outer wireframe icosahedron
-    const outerGeo = new THREE.IcosahedronGeometry(1.6, 1);
-    const outerMat = new THREE.MeshBasicMaterial({
+    // Outer crystalline structural cage (Icosahedron)
+    const outerGeo = new THREE.IcosahedronGeometry(1.65, 1);
+    const outerMat = new THREE.MeshStandardMaterial({
       color: 0x38bdf8,
       wireframe: true,
+      roughness: 0.2,
+      metalness: 0.8,
       transparent: true,
-      opacity: 0.22,
+      opacity: 0.28,
     });
     const outerMesh = new THREE.Mesh(outerGeo, outerMat);
     group.add(outerMesh);
 
-    // Inner geometric cage
-    const innerGeo = new THREE.OctahedronGeometry(1.0, 0);
-    const innerMat = new THREE.MeshBasicMaterial({
+    // Network Node Anchors (Points on Vertices)
+    const pointsMat = new THREE.PointsMaterial({
+      color: 0x00f5d4,
+      size: 0.065,
+      transparent: true,
+      opacity: 0.85,
+    });
+    const pointsMesh = new THREE.Points(outerGeo, pointsMat);
+    group.add(pointsMesh);
+
+    // Inner geometric nucleus (Octahedron)
+    const innerGeo = new THREE.OctahedronGeometry(1.05, 0);
+    const innerMat = new THREE.MeshStandardMaterial({
       color: 0xa855f7,
       wireframe: true,
+      roughness: 0.1,
+      metalness: 0.9,
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.55,
     });
     const innerMesh = new THREE.Mesh(innerGeo, innerMat);
     group.add(innerMesh);
 
-    // Glowing core sphere
-    const coreGeo = new THREE.SphereGeometry(0.35, 16, 16);
-    const coreMat = new THREE.MeshBasicMaterial({
+    // Glowing Kernel Node (Solid Sphere with High Emissive Value)
+    const coreGeo = new THREE.SphereGeometry(0.38, 24, 24);
+    const coreMat = new THREE.MeshStandardMaterial({
       color: 0x00f5d4,
-      wireframe: false,
+      emissive: 0x00f5d4,
+      emissiveIntensity: 0.65,
+      roughness: 0.1,
+      metalness: 0.5,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.92,
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     group.add(coreMesh);
 
-    // Subtle orbital ring
-    const ringGeo = new THREE.RingGeometry(2.1, 2.12, 64);
+    // Orbital Planar Rings
+    const ring1Geo = new THREE.RingGeometry(2.15, 2.18, 64);
     const ringMat = new THREE.MeshBasicMaterial({
       color: 0x00f5d4,
       side: THREE.DoubleSide,
       transparent: true,
+      opacity: 0.22,
+    });
+    const ring1Mesh = new THREE.Mesh(ring1Geo, ringMat);
+    ring1Mesh.rotation.x = Math.PI / 3;
+    ring1Mesh.rotation.y = Math.PI / 6;
+    group.add(ring1Mesh);
+
+    const ring2Geo = new THREE.RingGeometry(2.35, 2.37, 64);
+    const ring2Mat = new THREE.MeshBasicMaterial({
+      color: 0xa855f7,
+      side: THREE.DoubleSide,
+      transparent: true,
       opacity: 0.18,
     });
-    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-    ringMesh.rotation.x = Math.PI / 3;
-    group.add(ringMesh);
+    const ring2Mesh = new THREE.Mesh(ring2Geo, ring2Mat);
+    ring2Mesh.rotation.x = -Math.PI / 4;
+    ring2Mesh.rotation.z = Math.PI / 5;
+    group.add(ring2Mesh);
 
-    // 4. Pointer Interaction
+    // 5. Interactive Mouse Parallax
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
@@ -104,16 +148,18 @@ export function ThreeHero() {
       const rect = container.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      targetX = x * 0.8;
-      targetY = y * 0.8;
+      targetX = x * 0.9;
+      targetY = y * 0.9;
     };
 
     window.addEventListener("mousemove", handlePointerMove, { passive: true });
 
-    // 5. Reduced Motion Check
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // 6. Reduced Motion Accessibility Check
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    // 6. Intersection Observer (Pause Rendering When Offscreen)
+    // 7. Intersection Observer for Frame Budget Management
     let isVisible = true;
     let animationFrameId: number;
 
@@ -125,7 +171,7 @@ export function ThreeHero() {
     );
     observer.observe(container);
 
-    // 7. Animation Loop
+    // 8. Fluid Render Loop
     const clock = new THREE.Clock();
 
     const animate = () => {
@@ -135,21 +181,29 @@ export function ThreeHero() {
       const delta = clock.getDelta();
 
       if (!prefersReducedMotion) {
-        outerMesh.rotation.y += delta * 0.25;
-        outerMesh.rotation.x += delta * 0.12;
+        outerMesh.rotation.y += delta * 0.22;
+        outerMesh.rotation.x += delta * 0.1;
 
-        innerMesh.rotation.y -= delta * 0.4;
-        innerMesh.rotation.z += delta * 0.2;
+        innerMesh.rotation.y -= delta * 0.38;
+        innerMesh.rotation.z += delta * 0.18;
 
-        ringMesh.rotation.z += delta * 0.15;
+        ring1Mesh.rotation.z += delta * 0.14;
+        ring2Mesh.rotation.z -= delta * 0.12;
 
         const time = clock.getElapsedTime();
-        const scale = 1 + Math.sin(time * 2.5) * 0.08;
-        coreMesh.scale.set(scale, scale, scale);
+        const pulse = 1 + Math.sin(time * 2.2) * 0.07;
+        coreMesh.scale.set(pulse, pulse, pulse);
+
+        // Dynamic light orbit
+        cyanLight.position.x = Math.sin(time * 0.7) * 3.5;
+        cyanLight.position.y = Math.cos(time * 0.9) * 3;
+        violetLight.position.x = -Math.cos(time * 0.6) * 3.5;
+        violetLight.position.y = -Math.sin(time * 0.8) * 3;
       }
 
-      mouseX += (targetX - mouseX) * 0.05;
-      mouseY += (targetY - mouseY) * 0.05;
+      // Smooth lerp tracking
+      mouseX += (targetX - mouseX) * 0.06;
+      mouseY += (targetY - mouseY) * 0.06;
 
       group.rotation.y = mouseX;
       group.rotation.x = -mouseY;
@@ -159,7 +213,7 @@ export function ThreeHero() {
 
     animate();
 
-    // 8. Resize Handler
+    // 9. Resize Handling
     const handleResize = () => {
       if (!container) return;
       const newW = container.clientWidth;
@@ -171,24 +225,29 @@ export function ThreeHero() {
 
     window.addEventListener("resize", handleResize);
 
-    // Cleanup
+    // 10. Robust GPU & Resource Cleanup
     return () => {
       cancelAnimationFrame(animationFrameId);
       observer.disconnect();
       window.removeEventListener("mousemove", handlePointerMove);
       window.removeEventListener("resize", handleResize);
+
       if (renderer?.domElement && container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
       renderer?.dispose();
+
       outerGeo.dispose();
       outerMat.dispose();
+      pointsMat.dispose();
       innerGeo.dispose();
       innerMat.dispose();
       coreGeo.dispose();
       coreMat.dispose();
-      ringGeo.dispose();
+      ring1Geo.dispose();
       ringMat.dispose();
+      ring2Geo.dispose();
+      ring2Mat.dispose();
     };
   }, []);
 
@@ -198,17 +257,17 @@ export function ThreeHero() {
       className="relative w-full h-[340px] sm:h-[400px] md:h-[480px] flex items-center justify-center overflow-hidden"
       aria-label="Interactive 3D Engineering Spatial Core"
     >
-      {/* WebGL Fallback if unsupported */}
+      {/* WebGL Fallback UI */}
       {!webglSupported && (
-        <div className="flex flex-col items-center justify-center p-8 text-center border border-white/10 rounded-2xl bg-surface-1/80 backdrop-blur-md">
+        <div className="flex flex-col items-center justify-center p-8 text-center border border-white/10 rounded-2xl bg-[#0e1626]/80 backdrop-blur-md">
           <div className="w-20 h-20 rounded-full border border-cyan-primary/40 flex items-center justify-center mb-4 text-cyan-primary text-2xl font-mono">
             ◈
           </div>
           <span className="font-mono text-xs uppercase tracking-wider text-cyan-primary mb-1">
-            Spatial Geometry Node
+            Spatial Geometry Matrix
           </span>
           <p className="text-xs text-text-muted max-w-xs">
-            WebGL acceleration unavailable. Interactive 3D visualization scaled to static vector matrix.
+            Hardware acceleration disabled. Interactive 3D visualization rendered as static vector node.
           </p>
         </div>
       )}
