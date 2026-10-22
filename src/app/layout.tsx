@@ -24,7 +24,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rithiksv.dev"),
+  metadataBase: new URL("https://developer-portfolio-eta-steel.vercel.app"),
   title: {
     default: "Rithik SV — Student Developer & Systems Builder",
     template: "%s | Rithik SV",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://rithiksv.dev",
+    url: "https://developer-portfolio-eta-steel.vercel.app",
     siteName: "Rithik SV Portfolio",
     title: "Rithik SV — Student Developer & Systems Builder",
     description:
