@@ -31,8 +31,8 @@ export interface Project {
   title: string;
   subtitle: string;
   tagline: string;
-  category: "Interactive & Graphics" | "Local-First & Commercial" | "Systems & Web";
-  visibility: "Public Open Source" | "Private Commercial" | "Private Platform" | "Public Case Study";
+  category: "Physics & Scientific Simulation" | "Interactive & Graphics" | "Local-First & Commercial" | "Systems & Web";
+  visibility: "Public Open Source" | "Private Commercial" | "Public Case Study";
   featured: boolean;
   status: string;
   timeline: string;
@@ -58,6 +58,105 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    slug: "champ-virtual-physics-lab",
+    title: "CHAMP Virtual Physics Lab",
+    subtitle: "Interactive Physics Laboratory & Quantum Simulation Suite",
+    tagline: "Deterministic, syllabus-faithful virtual laboratory workbenches for VIT Chennai Engineering Physics (BAPHY105).",
+    category: "Physics & Scientific Simulation",
+    visibility: "Public Open Source",
+    featured: true,
+    status: "Production v1.0.0 (132/132 Tests Passing)",
+    timeline: "October 2026",
+    role: "Lead Systems & Physics Engine Architect",
+    summary:
+      "A browser-based, offline-ready physics simulation platform built for Engineering Physics students at VIT Chennai. Features 9 high-fidelity interactive workbenches (quantum tunneling, electron diffraction, LED Planck constant, spectrometer optics, photodiode characteristics), live KaTeX equation rendering, PWA support, and 132 automated tests.",
+    heroImage: "/images/projects/champ-lab/quantum-tunneling-workbench.png",
+    screenshots: [
+      {
+        url: "/images/projects/champ-lab/quantum-tunneling-workbench.png",
+        caption:
+          "Interactive quantum tunneling workbench displaying wavefunction decay, transmission probability T(E), barrier width parameter sliders, and observation telemetry.",
+      },
+      {
+        url: "/images/projects/champ-lab/electron-diffraction-workbench.png",
+        caption:
+          "Electron diffraction cathode-ray tube simulation showing graphite crystal concentric rings, accelerating potential modulation, and Bragg wavelength verification.",
+      },
+      {
+        url: "/images/projects/champ-lab/planck-led-workbench.png",
+        caption:
+          "Planck's constant LED workbench with interactive potentiometer sweep, knee-voltage linear regression, and Planck's constant calculation.",
+      },
+    ],
+    metrics: [
+      { label: "Automated Tests", value: "132/132", detail: "Comprehensive Vitest unit & interactive E2E suites passing" },
+      { label: "Workbenches", value: "9 Labs", detail: "Syllabus-faithful experiments for VIT Chennai BAPHY105" },
+      { label: "Formula Engine", value: "KaTeX", detail: "Real-time LaTeX formula rendering with live parameter substitution" },
+      { label: "Network Overhead", value: "0 kB", detail: "100% offline-first PWA with zero cloud runtime dependencies" },
+    ],
+    technologies: [
+      "React 18",
+      "TypeScript",
+      "Vite",
+      "KaTeX",
+      "Tailwind CSS",
+      "Vitest",
+      "Pure SVG Graphics",
+      "PWA & Service Workers",
+    ],
+    githubUrl: "https://github.com/leinhabersv-bit/champ-virtual-physics-lab",
+    problem:
+      "Conventional virtual labs often rely on passive pre-rendered videos or unverified screen mockups with arbitrary random jitter. Students at VIT Chennai needed rigorous, mathematically deterministic workbenches where apparatus controls, circuit topologies, and measurements adhere strictly to closed-form physics equations with interactive error propagation.",
+    solution:
+      "Architected a modular simulation suite in TypeScript where every experiment executes verified mathematical models (e.g. finite square barrier tunneling transmission, Cauchy grating dispersion, Bragg crystal diffraction). Designed scalable SVG apparatus illustrations, interactive terminal-to-terminal circuit netlists, and real-time observation tables with CSV and Python export.",
+    architecture: {
+      title: "Deterministic Physics Simulation & Workbench Hierarchy",
+      description: "Strict separation between physical simulation solvers, netlist state, and reactive SVG workbenches:",
+      components: [
+        { name: "ISimulationEngine", role: "Closed-form analytical solvers calculating readings, derived constants, and model curves." },
+        { name: "CircuitNetlist", role: "Declarative wiring topology validator checking polarity, node connections, and short circuits." },
+        { name: "Workbench UI", role: "High-DPI SVG instrument renderings with tactile knob/slider controls and observation tables." },
+        { name: "InstructionalSystem", role: "3-tier pedagogy: Guided causal steps, Independent open sandbox, and 10-mark Viva simulator." },
+      ],
+    },
+    keyDecisions: [
+      {
+        title: "Pure Analytical Physics Solvers vs Random Mock Data",
+        rationale:
+          "Executing closed-form quantum and electromagnetic equations guarantees physical fidelity, enables students to observe true physical relationships (e.g. exponential barrier decay), and allows exact automated testing.",
+      },
+      {
+        title: "Offline PWA Architecture with Zero Runtime Cloud Dependence",
+        rationale:
+          "Eliminated cloud hosting failures during laboratory sessions by bundling all solvers, SVG assets, and KaTeX math directly into an offline service worker.",
+      },
+      {
+        title: "Accessible Dual-Mode Circuit Wiring",
+        rationale:
+          "Implemented drag-and-drop wire patching alongside single-click and keyboard-navigable terminal selection, ensuring full WCAG 2.1 AA accessibility.",
+      },
+    ],
+    challenges: [
+      {
+        problem: "Numerical instability in evanescent wave calculations across thick potential barriers.",
+        resolution:
+          "Formulated transmission coefficients using hyperbolic sinh identities, capping evanescent attenuation arguments to prevent floating-point underflow.",
+      },
+      {
+        problem: "Ensuring exact syllabus alignment with VIT Chennai Engineering Physics manual.",
+        resolution:
+          "Mapped all 9 experiments directly to BAPHY105 printed manuals, verifying unit dimensions, apparatus specs, and observation column formats with strict test assertions.",
+      },
+    ],
+    verification: {
+      framework: "Vitest 2.1 + React Testing Library (26 test files)",
+      metrics: "132/132 tests passing in 12.04s, 0 failed, 0 skipped",
+      verifiedOn: "Node 22 runtime & Vite local build",
+      notes:
+        "Tests assert physical accuracy of Planck's constant (6.626e-34 J·s), de Broglie wavelengths, quantum tunneling decay rates, and complete student user journeys.",
+    },
+  },
   {
     slug: "panic-delivery",
     title: "PANIC DELIVERY",
@@ -144,7 +243,7 @@ export const PROJECTS: Project[] = [
     ],
     verification: {
       framework: "npx tsx (Node.js Test Runner)",
-      metrics: "10 test suites, 10 passed, 0 failed, 15.7ms runtime",
+      metrics: "10 test suites, 10 passed, 0 failed, 10.6ms runtime",
       verifiedOn: "Local CI environment & live Vercel production",
       notes: "Tests verify road scales, hold-to-charge kinematics, target lock-on, miss taxonomy, celebration contracts, and high score state transitions.",
     },
@@ -228,81 +327,6 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    slug: "eventhub-cc",
-    title: "EventHub-CC",
-    subtitle: "Campus Event Discovery & Telemetry Platform",
-    tagline: "University community platform featuring automated multi-source intake and telemetry analytics.",
-    category: "Systems & Web",
-    visibility: "Private Platform",
-    featured: true,
-    status: "Production Prototype",
-    timeline: "2026",
-    role: "Full-Stack Software Developer",
-    summary:
-      "An interactive event discovery, scraping, and telemetry portal built for campus communities, utilizing Next.js App Router, Cheerio ingestion pipelines, and Framer Motion visual layouts.",
-    heroImage: "/images/projects/eventhub-preview.svg",
-    screenshots: [
-      {
-        url: "/images/projects/eventhub-preview.svg",
-        caption: "Obsidian Lumina constellation layout and real-time campus telemetry dashboard.",
-      },
-    ],
-    metrics: [
-      { label: "Frontend Framework", value: "Next.js 15", detail: "App Router architecture running on Node 22 runtime" },
-      { label: "Ingestion Engine", value: "Cheerio", detail: "Automated multi-source event intake & normalizers" },
-      { label: "UI Motion", value: "Framer Motion", detail: "Fluid layout transitions and telemetry visualization" },
-      { label: "Testing", value: "Vitest", detail: "Automated ingestion parsing and security header verification" },
-    ],
-    technologies: [
-      "Next.js 15",
-      "TypeScript",
-      "Node.js 22",
-      "Cheerio",
-      "Framer Motion",
-      "Lucide Icons",
-      "Vitest",
-    ],
-    problem:
-      "University students frequently miss hackathons, workshops, and student union announcements scattered across disconnected portals, social media groups, and static bulletin boards.",
-    solution:
-      "Architected a centralized hub combining automated web scraping adapters with a curated review workbench, presenting upcoming campus opportunities through an interactive constellation visual layout.",
-    architecture: {
-      title: "Data Pipeline & Interface Layer",
-      description: "Scraping, review, and presentation pipeline:",
-      components: [
-        { name: "import-events.ts", role: "Cheerio-powered scraper extracting date, venue, tags, and registrations." },
-        { name: "review-events.ts", role: "Administrative workbench validating extracted event schemas." },
-        { name: "Obsidian Lumina UI", role: "High-contrast dark theme layout presenting events chronologically." },
-        { name: "Telemetry Engine", role: "Aggregates student bookmarking trends and category interest heatmaps." },
-      ],
-    },
-    keyDecisions: [
-      {
-        title: "Server-Side Script Ingestion vs Real-Time Client Fetching",
-        rationale:
-          "Pre-caching and sanitizing event listings on the server avoids rate-limiting, handles heterogeneous target layouts cleanly, and serves zero-latency payloads to users.",
-      },
-      {
-        title: "Strict Security Headers & CSP",
-        rationale:
-          "Configured Content Security Policy and defense-in-depth headers in Next.js configuration to safeguard community data.",
-      },
-    ],
-    challenges: [
-      {
-        problem: "Inconsistent event markup across university department pages.",
-        resolution:
-          "Created modular site adapters with fallback regex date extractors that cleanly normalize messy HTML.",
-      },
-    ],
-    verification: {
-      framework: "Vitest unit tests & Vercel deployment audit",
-      metrics: "Passing data pipeline and layout tests",
-      verifiedOn: "Node 22 runtime",
-      notes: "Internal project details kept confidential; architecture highlighted as modern web engineering case study.",
-    },
-  },
-  {
     slug: "mic-learning-path",
     title: "MIC LearnPath",
     subtitle: "Prerequisite DAG Curriculum Tracker",
@@ -310,7 +334,7 @@ export const PROJECTS: Project[] = [
     category: "Systems & Web",
     visibility: "Public Open Source",
     featured: false,
-    status: "Completed",
+    status: "Completed & Verified",
     timeline: "August 2026",
     role: "Frontend Engineer",
     summary:
@@ -363,6 +387,80 @@ export const PROJECTS: Project[] = [
       notes: "Public repository leinhabersv-bit/Mic-learning-path verified.",
     },
   },
+  {
+    slug: "developer-portfolio",
+    title: "Cinematic Developer Portfolio",
+    subtitle: "High-Craft Next.js 16 & Three.js Engineering Exhibition",
+    tagline: "Production-ready developer portfolio with procedural 3D spatial geometry, micro-interactions, and multi-breakpoint QA.",
+    category: "Interactive & Graphics",
+    visibility: "Public Open Source",
+    featured: false,
+    status: "Shipped & Tested",
+    timeline: "October 2026",
+    role: "Full-Stack Design Engineer",
+    summary:
+      "The cinematic developer portfolio you are viewing, built with Next.js 16 App Router, React 19, TypeScript, Three.js, Tailwind CSS v4, Motion, and Vitest. Designed with rigorous anti-AI-template principles and multi-breakpoint visual verification.",
+    heroImage: "/images/projects/champ-lab/dashboard.png",
+    screenshots: [
+      {
+        url: "/images/projects/champ-lab/dashboard.png",
+        caption: "Verified case study directories, 3D spatial geometry engine, and interactive simulation workbenches.",
+      },
+    ],
+    metrics: [
+      { label: "Frontend Framework", value: "Next.js 16", detail: "Turbopack build with React 19 partial prerendering" },
+      { label: "3D Core", value: "Three.js", detail: "ACESFilmic tone mapping with lerp cursor tracking" },
+      { label: "Type Safety", value: "TypeScript 5", detail: "Strict compiler checks with zero any escapes" },
+      { label: "Test Coverage", value: "Vitest + RTL", detail: "Automated component and data integrity verification" },
+    ],
+    technologies: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript 5",
+      "Three.js",
+      "Tailwind CSS v4",
+      "Motion",
+      "Vitest",
+    ],
+    liveUrl: "https://developer-portfolio-eta-steel.vercel.app/",
+    githubUrl: "https://github.com/leinhabersv-bit/developer-portfolio",
+    problem:
+      "Most developer portfolios look identical: generic purple glow cards, fake metrics, unfunctional UI mockups, and no verified test evidence.",
+    solution:
+      "Engineered an art-directed exhibition grounding every claim in verified public repositories, automated passing tests, real interactive simulation widgets, and high-DPI screenshots.",
+    architecture: {
+      title: "Clean Next.js 16 App Router Architecture",
+      description: "Modular component hierarchy and typed dataset in src/:",
+      components: [
+        { name: "ThreeHero.tsx", role: "High-performance procedural 3D spatial geometry with dynamic studio lighting." },
+        { name: "ProjectCard.tsx", role: "Interactive case study preview card with verification indicators." },
+        { name: "projects.ts", role: "Typed single-source-of-truth project schema with architectural tradeoffs." },
+        { name: "WorkFilter.tsx", role: "Client-side category filtering across 4 technical domains." },
+      ],
+    },
+    keyDecisions: [
+      {
+        title: "IntersectionObserver 3D Animation Pausing",
+        rationale: "Pausing Three.js rendering loops when scrolled offscreen saves GPU cycles and battery life.",
+      },
+      {
+        title: "Strict prefers-reduced-motion Alternatives",
+        rationale: "Ensures vestibular comfort for users requesting reduced motion by defaulting to static vector geometry.",
+      },
+    ],
+    challenges: [
+      {
+        problem: "Tailwind CSS v4 theme integration with custom design tokens.",
+        resolution: "Declared inline theme variables directly in @theme inline block in globals.css.",
+      },
+    ],
+    verification: {
+      framework: "Vitest + React Testing Library + Playwright QA",
+      metrics: "All test files passing, zero TypeScript errors",
+      verifiedOn: "Desktop (1440px), Tablet (768px), Mobile (390px)",
+      notes: "Public repository leinhabersv-bit/developer-portfolio verified.",
+    },
+  },
 ];
 
 export const TECHNICAL_SKILLS = [
@@ -370,11 +468,11 @@ export const TECHNICAL_SKILLS = [
     category: "Languages",
     description: "Core languages used across production applications, games, and data pipelines.",
     skills: [
-      { name: "TypeScript", proficiency: "Expert", context: "Primary language for panic-delivery engine, ClientLaunch suite, Next.js applications" },
+      { name: "TypeScript", proficiency: "Expert", context: "Primary language for CHAMP Physics Lab, panic-delivery engine, and Next.js portfolio" },
       { name: "JavaScript (ESNext)", proficiency: "Advanced", context: "Modern async/await, DOM APIs, Canvas 2D contexts, closures, workers" },
-      { name: "Python 3.x", proficiency: "Competent", context: "Data manipulation, automation scripts, test harnesses, algorithmic verification" },
+      { name: "Python 3.x", proficiency: "Competent", context: "Numerical algorithms, Jupyter notebook export scripts, scientific verification" },
       { name: "HTML5 & Semantic Web", proficiency: "Expert", context: "Canvas 2D contexts, audio contexts, semantic landmarks, ARIA accessible roles" },
-      { name: "CSS3 / Modern Layouts", proficiency: "Advanced", context: "Tailwind CSS, Grid, Flexbox, custom design tokens, container queries" },
+      { name: "CSS3 / Modern Layouts", proficiency: "Advanced", context: "Tailwind CSS v4, Grid, Flexbox, custom design tokens, container queries" },
     ],
   },
   {
@@ -384,15 +482,24 @@ export const TECHNICAL_SKILLS = [
       { name: "React 18 / 19", proficiency: "Advanced", context: "Server components, custom hooks, context state machines, concurrent rendering" },
       { name: "Next.js (App Router)", proficiency: "Advanced", context: "Static site generation, route handlers, metadata, layout cascades" },
       { name: "Vite Ecosystem", proficiency: "Expert", context: "High-speed bundling, HMR, custom plugin setups, multi-target builds" },
-      { name: "Framer Motion / Motion", proficiency: "Advanced", context: "Layout animations, gesture recognition, scroll-driven choreography" },
+      { name: "Motion.dev / Motion", proficiency: "Advanced", context: "Layout animations, gesture recognition, scroll-driven choreography" },
       { name: "Tailwind CSS", proficiency: "Expert", context: "Tailwind v3/v4 theme configurations, responsive utility styling, dark mode" },
+    ],
+  },
+  {
+    category: "Physics & Scientific Simulators",
+    description: "Deterministic physical modeling, KaTeX mathematics, and instrument interfaces.",
+    skills: [
+      { name: "Quantum & Analytical Modeling", proficiency: "Advanced", context: "Finite barrier tunneling, Bragg diffraction, LED Planck constant regression" },
+      { name: "KaTeX Mathematical Engine", proficiency: "Advanced", context: "High-speed client-side LaTeX formula rendering with dynamic parameter binding" },
+      { name: "Circuit Netlist Topology", proficiency: "Advanced", context: "Declarative terminal binding, polarity checking, and breadboard wiring logic" },
     ],
   },
   {
     category: "Graphics, Audio & Spatial",
     description: "Interactive 2D/3D visual rendering, physics, and audio synthesis.",
     skills: [
-      { name: "Three.js", proficiency: "Intermediate", context: "Camera matrices, lighting, geometry instancing, 3D visual spike prototypes" },
+      { name: "Three.js", proficiency: "Intermediate", context: "Camera matrices, lighting, geometry instancing, procedural spatial core" },
       { name: "HTML5 Canvas 2D Engine", proficiency: "Advanced", context: "60fps game loops, vehicle kinematics, particle cascades, screen shake" },
       { name: "Web Audio API", proficiency: "Advanced", context: "Runtime oscillator synthesis, gain nodes, custom noise buffers, dynamic sound" },
     ],
@@ -411,10 +518,11 @@ export const TECHNICAL_SKILLS = [
     category: "Quality Assurance & DevOps",
     description: "Automated testing, continuous integration, and disciplined workflows.",
     skills: [
-      { name: "Vitest & Node Test Runner", proficiency: "Advanced", context: "10/10 test suite in panic-delivery, unit tests in ClientLaunch and EventHub" },
-      { name: "Playwright E2E", proficiency: "Competent", context: "Browser automation and offline workflow tests for commercial web suites" },
+      { name: "Vitest & RTL", proficiency: "Expert", context: "132/132 test suite in CHAMP Physics Lab, 9 tests in developer-portfolio" },
+      { name: "Node Test Runner", proficiency: "Advanced", context: "10/10 automated regression tests in panic-delivery running in 10.6ms" },
+      { name: "Playwright E2E", proficiency: "Competent", context: "Multi-breakpoint screenshot QA, browser automation, and offline workflow tests" },
       { name: "Git & GitHub Workflows", proficiency: "Advanced", context: "Strict branch discipline, semantic commit messages, remote CI triggers" },
-      { name: "Vercel Deployment", proficiency: "Advanced", context: "Edge deployment, environment variable configuration, build optimization" },
+      { name: "Cloudflare & Vercel Deployment", proficiency: "Advanced", context: "Edge deployment, environment variable configuration, build optimization" },
     ],
   },
 ];

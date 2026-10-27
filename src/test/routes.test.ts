@@ -13,10 +13,11 @@ describe("Routing & SEO Generators", () => {
     expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/stack");
     expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/contact");
 
+    expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/champ-virtual-physics-lab");
     expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/panic-delivery");
     expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/clientlaunch");
-    expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/eventhub-cc");
     expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/mic-learning-path");
+    expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/developer-portfolio");
   });
 
   it("generates compliant robots directives", () => {

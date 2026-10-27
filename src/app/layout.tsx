@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#07090e",
+  themeColor: "#06080d",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -26,23 +26,26 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://developer-portfolio-eta-steel.vercel.app"),
   title: {
-    default: "Rithik SV — Student Developer & Systems Builder",
+    default: "Rithik SV — Student Software Developer & Systems Engineer",
     template: "%s | Rithik SV",
   },
   description:
-    "Personal engineering portfolio of Rithik SV (@leinhabersv-bit). Showcasing interactive 2D/3D web graphics, local-first applications, and rigorously tested systems.",
+    "Engineering portfolio of Rithik SV (@leinhabersv-bit). Showcasing computational physics simulators (CHAMP Lab), 60fps arcade drift engines (Panic Delivery), Three.js 3D spatial cores, and local-first architectures.",
   keywords: [
     "Rithik SV",
     "leinhabersv-bit",
+    "VIT Chennai",
     "Student Software Developer",
     "Frontend Engineer",
+    "CHAMP Virtual Physics Lab",
+    "Panic Delivery",
     "Three.js Developer",
     "TypeScript",
-    "Next.js",
-    "React",
+    "Next.js 16",
+    "React 19",
+    "Quantum Simulators",
+    "Web Audio API",
     "Local-First Software",
-    "Panic Delivery",
-    "ClientLaunch",
   ],
   authors: [{ name: "Rithik SV", url: "https://github.com/leinhabersv-bit" }],
   creator: "Rithik SV",
@@ -51,15 +54,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://developer-portfolio-eta-steel.vercel.app",
     siteName: "Rithik SV Portfolio",
-    title: "Rithik SV — Student Developer & Systems Builder",
+    title: "Rithik SV — Student Software Developer & Systems Engineer",
     description:
-      "Interactive 2D/3D web graphics, local-first architectures, and rigorously tested frontend engineering.",
+      "Interactive 2D/3D web graphics, quantum physics simulators, local-first architectures, and rigorously tested frontend engineering.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rithik SV — Student Developer & Systems Builder",
+    title: "Rithik SV — Student Software Developer & Systems Engineer",
     description:
-      "Interactive 2D/3D graphics, local-first architectures, and verified engineering test suites.",
+      "Interactive 2D/3D graphics, physics simulators, local-first architectures, and verified engineering test suites.",
   },
   robots: {
     index: true,
@@ -77,7 +80,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#07090e] text-[#f8fafc] font-sans bg-grid-subtle selection:bg-cyan-primary/20 selection:text-cyan-primary">
+      <body className="min-h-full flex flex-col bg-[#06080d] text-[#f8fafc] font-sans bg-grid-subtle selection:bg-cyan-primary/20 selection:text-cyan-primary">
         <Navbar />
         <main className="flex-1 w-full">{children}</main>
         <Footer />

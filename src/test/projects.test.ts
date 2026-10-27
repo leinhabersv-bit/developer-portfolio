@@ -2,12 +2,13 @@ import { describe, it, expect } from "vitest";
 import { PROJECTS, TECHNICAL_SKILLS } from "@/data/projects";
 
 describe("Projects Data Integrity & Verification Standard", () => {
-  it("contains only verified projects and no unverified claims", () => {
+  it("contains verified projects with public open source evidence", () => {
     const slugs = PROJECTS.map((p) => p.slug);
+    expect(slugs).toContain("champ-virtual-physics-lab");
     expect(slugs).toContain("panic-delivery");
     expect(slugs).toContain("clientlaunch");
-    expect(slugs).toContain("eventhub-cc");
     expect(slugs).toContain("mic-learning-path");
+    expect(slugs).toContain("developer-portfolio");
 
     // Must NOT feature duplicates or uncredited forks as original work
     expect(slugs).not.toContain("unicc");
@@ -31,6 +32,14 @@ describe("Projects Data Integrity & Verification Standard", () => {
     });
   });
 
+  it("ensures champ-virtual-physics-lab has verified open-source repository and 132 tests", () => {
+    const champ = PROJECTS.find((p) => p.slug === "champ-virtual-physics-lab");
+    expect(champ).toBeDefined();
+    expect(champ?.githubUrl).toBe("https://github.com/leinhabersv-bit/champ-virtual-physics-lab");
+    expect(champ?.visibility).toBe("Public Open Source");
+    expect(champ?.metrics.find((m) => m.label === "Automated Tests")?.value).toBe("132/132");
+  });
+
   it("ensures panic-delivery has verified live deployment and public source", () => {
     const panic = PROJECTS.find((p) => p.slug === "panic-delivery");
     expect(panic).toBeDefined();
@@ -43,14 +52,10 @@ describe("Projects Data Integrity & Verification Standard", () => {
     const claunch = PROJECTS.find((p) => p.slug === "clientlaunch");
     expect(claunch?.visibility).toBe("Private Commercial");
     expect(claunch?.githubUrl).toBeUndefined();
-
-    const eventhub = PROJECTS.find((p) => p.slug === "eventhub-cc");
-    expect(eventhub?.visibility).toBe("Private Platform");
-    expect(eventhub?.githubUrl).toBeUndefined();
   });
 
   it("ensures technical skills are divided into valid categories with concrete context", () => {
-    expect(TECHNICAL_SKILLS.length).toBeGreaterThanOrEqual(4);
+    expect(TECHNICAL_SKILLS.length).toBeGreaterThanOrEqual(5);
     TECHNICAL_SKILLS.forEach((group) => {
       expect(group.category).toBeTruthy();
       expect(group.skills.length).toBeGreaterThan(0);

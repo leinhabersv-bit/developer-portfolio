@@ -10,6 +10,7 @@ interface WorkFilterProps {
 
 const CATEGORIES = [
   "All",
+  "Physics & Scientific Simulation",
   "Interactive & Graphics",
   "Local-First & Commercial",
   "Systems & Web",
@@ -36,7 +37,7 @@ export function WorkFilter({ projects }: WorkFilterProps) {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-mono tracking-wide transition-all ${
                 isSelected
-                  ? "bg-cyan-primary text-[#07090e] font-semibold shadow-[0_0_20px_-3px_rgba(0,245,212,0.4)]"
+                  ? "bg-cyan-primary text-[#06080d] font-bold shadow-[0_0_20px_-3px_rgba(0,245,212,0.4)]"
                   : "text-text-muted hover:text-white hover:bg-white/[0.04]"
               }`}
             >

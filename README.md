@@ -1,23 +1,27 @@
 # 🚀 Developer Portfolio — Rithik SV
 
-> **Cinematic, high-performance personal engineering portfolio built with Next.js 16, React 19, TypeScript, Tailwind CSS, Three.js, and Vitest.**
+> **Cinematic, high-performance personal engineering portfolio built with Next.js 16, React 19, TypeScript, Tailwind CSS v4, Three.js, and Vitest.**
 
 [![Build Status](https://img.shields.io/badge/Build-Passing-22c55e?style=for-the-badge&logo=next.js&logoColor=fff)](https://nextjs.org/)
-[![Tests Passing](https://img.shields.io/badge/Tests-9%2F9_Passing-22c55e?style=for-the-badge&logo=vitest&logoColor=fff)](./src/test)
+[![Tests Passing](https://img.shields.io/badge/Tests-11%2F11_Passing-22c55e?style=for-the-badge&logo=vitest&logoColor=fff)](./src/test)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=fff)](https://www.typescriptlang.org/)
-[![Three.js](https://img.shields.io/badge/Three.js-Spatial_Core-00f5d4?style=for-the-badge&logo=three.js&logoColor=000)](https://threejs.org/)
+[![Three.js](https://img.shields.io/badge/Three.js-Kinetic_Spatial_Core-00f5d4?style=for-the-badge&logo=three.js&logoColor=000)](https://threejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](./LICENSE)
 
 ---
 
 ## 🧭 Overview
 
-This repository contains the complete personal developer portfolio for **Rithik SV** ([@leinhabersv-bit](https://github.com/leinhabersv-bit)), designed for software engineering recruiters, hackathon judges, technical collaborators, and prospective clients.
+This repository contains the complete personal developer portfolio for **Rithik SV** ([@leinhabersv-bit](https://github.com/leinhabersv-bit)), student software engineer at **Vellore Institute of Technology (VIT Chennai)**. Designed for engineering recruiters, hackathon judges, technical collaborators, and prospective clients.
 
 ### Visual & Architectural Philosophy
-- **Cinematic Aesthetic:** Deep charcoal backgrounds (`#07090e`), subtle electric cyan (`#00f5d4`) and violet (`#a855f7`) accents, sophisticated typography, and thin geometric borders.
-- **Progressive 3D Enhancement:** Lightweight Three.js procedural spatial core that tracks mouse pointer coordinates, pauses animation when scrolled offscreen via `IntersectionObserver`, respects `prefers-reduced-motion`, and provides a zero-overhead vector fallback if WebGL is unavailable.
-- **Evidence-Based Case Studies:** Every case study is grounded in verified codebases, automated test suites, or live deployments. No unverified employment, no fabricated metrics.
+- **Cinematic Aesthetic:** Deep obsidian backgrounds (`#06080d`), electric cyan (`#00f5d4`) and violet (`#a855f7`) accents, sophisticated typography, and thin geometric grid borders.
+- **Kinetic Spatial Engine (Three.js):** 3 interactive visual simulation modes ("Quantum Wave Harmonic", "Geodesic Core", "Kinematic Vectors"), live telemetry HUD (FPS, Node count), pause/play toggle, mouse drag and touch controls, with reduced-motion accessibility fallbacks.
+- **In-Situ Engineering Simulators:**
+  1. *Quantum Tunneling Simulator:* Analytical transmission probability $T(E)$ calculation with dynamic wavefunction canvas $\psi(x)$ and $E, V_0, a$ parameter sliders.
+  2. *Kinematic Drift Simulator:* Hold-to-charge ballistic trajectory arc visualizer with vehicle slip angle and miss taxonomy.
+  3. *DAG Progression Simulator:* Topological curriculum unlocker with reactive prerequisite state resolution.
+- **Evidence-Based Case Studies:** Every case study is grounded in verified codebases, automated test suites (e.g., 132 tests in CHAMP Physics Lab, 10 tests in Panic Delivery), or live deployments.
 - **Local-First & Zero Bloat:** Fast initial paint, responsive layouts from 360px mobile up to 1440px desktop, and zero external runtime tracking.
 
 ---
@@ -26,13 +30,13 @@ This repository contains the complete personal developer portfolio for **Rithik 
 
 ```
 src/app/
-├── page.tsx                 # Home: Editorial hero, 3D spatial centerpiece, pillars, featured projects
+├── page.tsx                 # Home: Institutional hero, 3D spatial centerpiece, telemetry deck, architectural pillars
 ├── work/
-│   ├── page.tsx             # Work Index: Interactive directory with category filter
+│   ├── page.tsx             # Work Index: Interactive directory with category filter (Physics & Sim, Web Audio, etc.)
 │   └── [slug]/
-│       └── page.tsx         # Dynamic Case Studies: Problem, architecture, tradeoffs, tests, links
+│       └── page.tsx         # Dynamic Case Studies: In-situ simulators, problem, architecture, tradeoffs, tests, links
 ├── about/
-│   └── page.tsx             # About: Authentic developer story, engineering tenets, focus areas
+│   └── page.tsx             # About: VIT Chennai student developer story, engineering tenets, focus areas
 ├── stack/
 │   └── page.tsx             # Stack: 5 verified technical domains with codebase context
 ├── contact/
@@ -49,10 +53,10 @@ src/app/
 - **Framework:** Next.js 16.4.2 (App Router with Turbopack)
 - **Library:** React 19.3.0
 - **Language:** TypeScript 5.x (Strict mode)
-- **Styling:** Tailwind CSS v4 (`@import "tailwindcss";`)
-- **3D Graphics:** Three.js (Spatial geometry wireframe cage with lerp cursor tracking)
+- **Styling:** Tailwind CSS v4 (`@import "tailwindcss";` with `@theme inline` palette mappings)
+- **3D Graphics:** Three.js (Spatial geometry wireframe cage with lerp cursor tracking & 3 kinetic modes)
 - **Icons:** Lucide React & Custom SVG Brand Components
-- **Test Harness:** Vitest 5.x + JSDOM + React Testing Library (9 unit & component tests)
+- **Test Harness:** Vitest 5.x + JSDOM + React Testing Library (11 unit & component tests)
 
 ---
 
@@ -64,14 +68,14 @@ Run the automated test suite:
 npm test
 ```
 
-### Test Suite Output (9/9 Passing):
+### Test Suite Output (11/11 Passing):
 ```
- ✓ src/test/projects.test.ts (5 tests)
+ ✓ src/test/projects.test.ts (6 tests)
  ✓ src/test/routes.test.ts (2 tests)
- ✓ src/test/components.test.tsx (2 tests)
+ ✓ src/test/components.test.tsx (3 tests)
 
  Test Files  3 passed (3)
-      Tests  9 passed (9)
+      Tests  11 passed (11)
 ```
 
 Run TypeScript compilation check:
@@ -123,26 +127,18 @@ npm run lint
 
 ---
 
-## ☁️ Vercel Deployment Instructions
+## ☁️ Deployment Architecture
 
-Deploying this portfolio to Vercel is seamless:
+### 1. Vercel Production Deployment
+The primary production instance is deployed on Vercel with automated GitHub integration:
+- Live URL: [https://developer-portfolio-eta-steel.vercel.app/](https://developer-portfolio-eta-steel.vercel.app/)
+- Framework: Next.js App Router (Turbopack)
+- CI/CD: Automated builds triggered on commits to `main`.
 
-1. **Via Vercel Web Dashboard:**
-   - Go to [vercel.com/new](https://vercel.com/new).
-   - Import `leinhabersv-bit/developer-portfolio`.
-   - Framework Preset: **Next.js** (automatically detected).
-   - Root Directory: `./`
-   - Build Command: `next build`
-   - Output Directory: `.next`
-   - Install Command: `npm install --legacy-peer-deps`
-   - Click **Deploy**.
-
-2. **Via Vercel CLI:**
-   ```bash
-   npx vercel
-   # Follow the interactive prompts, select Next.js, and deploy to production:
-   npx vercel --prod
-   ```
+### 2. Cloudflare Deployment Compatibility
+Cloudflare is supported via Cloudflare Pages or Cloudflare Workers:
+- **Cloudflare Pages (Static):** Run static export build and deploy via `wrangler pages deploy out`.
+- **Cloudflare Workers (Full-Stack):** For edge runtime deployments using `vinext` or `@cloudflare/workers`, refer to the official Cloudflare Workers Next.js guide.
 
 ---
 

@@ -5,14 +5,23 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { PROJECTS } from "@/data/projects";
 
 describe("Component Tests", () => {
-  it("renders ProjectCard with verified title, metrics, and visibility", () => {
-    const project = PROJECTS[0]; // panic-delivery
-    render(<ProjectCard project={project} />);
+  it("renders ProjectCard for CHAMP Virtual Physics Lab with verified title, metrics, and visibility", () => {
+    const champ = PROJECTS.find((p) => p.slug === "champ-virtual-physics-lab")!;
+    render(<ProjectCard project={champ} />);
+
+    expect(screen.getByText("CHAMP Virtual Physics Lab")).toBeInTheDocument();
+    expect(screen.getByText("Public Open Source")).toBeInTheDocument();
+    expect(screen.getByText("132/132")).toBeInTheDocument();
+    expect(screen.getByText("Case Study")).toBeInTheDocument();
+  });
+
+  it("renders ProjectCard for panic-delivery with verified title and metrics", () => {
+    const panic = PROJECTS.find((p) => p.slug === "panic-delivery")!;
+    render(<ProjectCard project={panic} />);
 
     expect(screen.getByText("PANIC DELIVERY")).toBeInTheDocument();
     expect(screen.getByText("Public Open Source")).toBeInTheDocument();
     expect(screen.getByText("10/10")).toBeInTheDocument();
-    expect(screen.getByText("Case Study")).toBeInTheDocument();
   });
 
   it("handles CopyButton click and updates state", async () => {

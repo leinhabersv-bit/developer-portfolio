@@ -1,31 +1,42 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import {
   ArrowLeft,
   ArrowRight,
   ExternalLink,
-  Lock,
   CheckCircle2,
+  Lock,
   Calendar,
   Layers,
   Check,
   ShieldAlert,
+  FlaskConical,
 } from "lucide-react";
 import { PROJECTS } from "@/data/projects";
+import {
+  QuantumTunnelingSimulator,
+  KinematicDriftSimulator,
+  DagProgressionSimulator,
+} from "@/components/InteractiveSimulators";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return PROJECTS.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  return PROJECTS.map((project) => ({
+    slug: project.slug,
+  }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = PROJECTS.find((p) => p.slug === slug);
-  if (!project) return { title: "Project Not Found" };
+
+  if (!project) {
+    return { title: "Project Not Found" };
+  }
 
   return {
     title: `${project.title} — Technical Case Study | Rithik SV`,
@@ -48,7 +59,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const isPrivate = project.visibility.includes("Private");
 
   return (
-    <article className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-16">
+    <article className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-16">
       {/* Top Breadcrumb */}
       <div>
         <Link
@@ -89,10 +100,10 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white">
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
             {project.title}
           </h1>
-          <p className="text-xl sm:text-2xl text-cyan-primary font-medium tracking-tight">
+          <p className="text-xl sm:text-2xl text-cyan-primary font-semibold tracking-tight">
             {project.subtitle}
           </p>
           <p className="text-base text-text-muted max-w-3xl leading-relaxed pt-2">
@@ -100,14 +111,14 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </p>
         </div>
 
-        {/* Live / Source CTAs */}
+        {/* Live / Source CTAs with Crisp High-Contrast Styling */}
         <div className="flex flex-wrap items-center gap-4 pt-4">
           {project.liveUrl && (
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-primary text-[#07090e] font-mono text-xs font-bold tracking-wide hover:bg-cyan-primary/90 transition-all shadow-[0_0_20px_-3px_rgba(0,245,212,0.3)]"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-primary text-[#06080d] font-mono text-xs font-bold tracking-wide hover:bg-cyan-primary/90 transition-all shadow-[0_0_24px_rgba(0,245,212,0.4)]"
             >
               <span>Play Live Deployment</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -119,10 +130,10 @@ export default async function CaseStudyPage({ params }: PageProps) {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/15 bg-white/[0.03] text-white font-mono text-xs font-semibold hover:border-white/30 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-white/[0.04] text-white font-mono text-xs font-semibold hover:border-white/35 hover:bg-white/[0.08] transition-all"
             >
               <span>View Source on GitHub</span>
-              <ExternalLink className="w-3.5 h-3.5 text-text-dim" />
+              <ExternalLink className="w-3.5 h-3.5 text-cyan-primary" />
             </a>
           )}
 
@@ -150,6 +161,43 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </div>
         ))}
       </section>
+
+      {/* Interactive In-Situ Simulation Widget */}
+      {project.slug === "champ-virtual-physics-lab" && (
+        <section className="space-y-4">
+          <div className="flex items-center gap-2">
+            <FlaskConical className="w-4 h-4 text-cyan-primary" />
+            <h3 className="font-mono text-xs uppercase tracking-widest text-cyan-primary">
+              Live In-Situ Laboratory Simulator
+            </h3>
+          </div>
+          <QuantumTunnelingSimulator />
+        </section>
+      )}
+
+      {project.slug === "panic-delivery" && (
+        <section className="space-y-4">
+          <div className="flex items-center gap-2">
+            <FlaskConical className="w-4 h-4 text-violet-primary" />
+            <h3 className="font-mono text-xs uppercase tracking-widest text-violet-primary">
+              Live Kinematic Ballistic Simulator
+            </h3>
+          </div>
+          <KinematicDriftSimulator />
+        </section>
+      )}
+
+      {project.slug === "mic-learning-path" && (
+        <section className="space-y-4">
+          <div className="flex items-center gap-2">
+            <FlaskConical className="w-4 h-4 text-lime-primary" />
+            <h3 className="font-mono text-xs uppercase tracking-widest text-lime-primary">
+              Live DAG Topological Progression Simulator
+            </h3>
+          </div>
+          <DagProgressionSimulator />
+        </section>
+      )}
 
       {/* Hero Media Showcase */}
       <section className="space-y-4">
