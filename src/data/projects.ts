@@ -26,6 +26,14 @@ export interface ProjectArchitecture {
   components: { name: string; role: string }[];
 }
 
+export interface ProjectTeam {
+  name: string;
+  size: number;
+  attribution: string;
+  role: string;
+  membersNote?: string;
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -37,6 +45,7 @@ export interface Project {
   status: string;
   timeline: string;
   role: string;
+  team?: ProjectTeam;
   summary: string;
   heroImage: string;
   screenshots: ProjectScreenshot[];
@@ -459,6 +468,119 @@ export const PROJECTS: Project[] = [
       metrics: "All test files passing, zero TypeScript errors",
       verifiedOn: "Desktop (1440px), Tablet (768px), Mobile (390px)",
       notes: "Public repository leinhabersv-bit/developer-portfolio verified.",
+    },
+  },
+  {
+    slug: "adapt-dqps-engine",
+    title: "A.D.A.P.T. — Autonomous Advertising Decision Engine",
+    subtitle: "DataQuest 3.0 | DQPS Challenge | Team M.A.R.K.A.N",
+    tagline: "Autonomous D2C advertising intelligence and profit-aware budget reallocation engine built for DataQuest 3.0.",
+    category: "Systems & Web",
+    visibility: "Public Case Study",
+    featured: true,
+    status: "DataQuest 3.0 (86 Tests Passing)",
+    timeline: "October 2026",
+    role: "Team Contributor / Collaborative Developer",
+    team: {
+      name: "Team M.A.R.K.A.N",
+      size: 6,
+      attribution: "Built collaboratively by Team M.A.R.K.A.N — 6 Team Members",
+      role: "Team Contributor / Collaborative Developer (Decision Hardening, Runtime Persistence & Testing)",
+      membersNote: "Collaborative 6-person engineering team for DataQuest 3.0 DQPS challenge."
+    },
+    summary:
+      "A.D.A.P.T. is a data-driven advertising intelligence and decision automation platform developed by Team M.A.R.K.A.N, a six-member team, for the DataQuest 3.0 DQPS challenge. The platform explores a structured approach to analyzing D2C advertising performance, generating actionable recommendations, and supporting simulated campaign decisions through analytics and feedback-driven workflows.",
+    heroImage: "/images/projects/adapt/adapt-overview.png",
+    screenshots: [
+      {
+        url: "/images/projects/adapt/adapt-overview.png",
+        caption:
+          "A.D.A.P.T. Portfolio Intelligence Overview displaying 30-day profitability curves, contribution profit vs ad spend, and stock risk detection.",
+      },
+      {
+        url: "/images/projects/adapt/adapt-recommendations.png",
+        caption:
+          "Autonomous budget reallocation recommendation interface with root-cause stock evidence, donor/receiver allocations, and human approval workflow.",
+      },
+      {
+        url: "/images/projects/adapt/adapt-learning.png",
+        caption:
+          "Closed-loop learning engine tracking prediction accuracy, outcome error calibration, and adaptive model confidence weights.",
+      },
+      {
+        url: "/images/projects/adapt/adapt-campaigns.png",
+        caption:
+          "Granular multi-platform campaign performance diagnostics with SKU-level break-even ROAS thresholds and inventory cover flags.",
+      },
+    ],
+    metrics: [
+      { label: "Team Attribution", value: "6 Members", detail: "Team M.A.R.K.A.N collaborative hackathon architecture" },
+      { label: "Automated Tests", value: "86/86", detail: "Vitest suites covering simulation, integration, and release regressions" },
+      { label: "Decision Engine", value: "Pure TS", detail: "Closed-form marginal profit per rupee and stock runway solvers" },
+      { label: "Simulation Loop", value: "3-Day Horizon", detail: "Deterministic hidden-world simulator with mulberry32 seeded PRNG" },
+    ],
+    technologies: [
+      "Next.js 16 (App Router)",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS v4",
+      "shadcn/ui",
+      "Recharts",
+      "Zod",
+      "Vitest",
+      "Supabase Postgres",
+    ],
+    githubUrl: "https://github.com/Bot25692/dqps-engine",
+    problem:
+      "Modern D2C advertising frequently optimizes blindly for surface ROAS (Return On Ad Spend) rather than true contribution profit, pouring money into products that are about to stock out or have thin margins. Team M.A.R.K.A.N needed an autonomous intelligence engine that balances profit-driven reallocation, platform spend floors, stock runway constraints, and causal anomaly diagnostics.",
+    solution:
+      "Developed A.D.A.P.T. as a 6-member team: a full-stack Next.js 16 analytics and decision engine. The system calculates marginal profit per rupee using log-log return curves (R(s) = r0*(s/s0)^beta), guards against stockouts (<3 day runway forces donor status), enforces a strict human-in-the-loop approval state machine (Pending -> Approved -> Simulated), and calibrates its confidence based on simulated 3-day post-execution outcomes.",
+    architecture: {
+      title: "Closed-Loop Advertising Intelligence Architecture",
+      description: "Strict decoupled architecture combining pure analytical solvers, shared runtime repository, and deterministic simulation:",
+      components: [
+        { name: "lib/analysis/", role: "Pure functional solvers calculating log-log beta return curves, marginal profit, and 14-day MAD anomaly detection." },
+        { name: "lib/db/runtime-repo.ts", role: "Shared process-local runtime managing canonical seed state, fixture persistence, and transactional decision locks." },
+        { name: "lib/simulation/", role: "Deterministic 3-day hidden-world simulation engine with mulberry32 PRNG, noise injection, and stock depletion caps." },
+        { name: "app/api/decide/", role: "Strict state-machine API endpoint processing idempotent register, approve, reject, and simulate actions." },
+        { name: "components/learning/", role: "Adaptive confidence visualizer updating model weights: c = c + 0.3 * (accuracy - c)." },
+      ],
+    },
+    keyDecisions: [
+      {
+        title: "Contribution Profit Optimization vs Raw ROAS",
+        rationale:
+          "Targeting contribution profit (Revenue * Margin Rate - Spend) with SKU-specific break-even thresholds (1/Margin Rate) ensures budget is allocated strictly where it generates net new cash, rather than inflating vanity revenue.",
+      },
+      {
+        title: "Inventory Runway as Hard Donorship Constraint",
+        rationale:
+          "Enforced stock runway thresholds: campaigns with under 5 days of inventory receive warnings, while under 3 days triggers forced donor status (up to -100% budget cut) to prevent wasting ad spend on unfulfillable orders.",
+      },
+      {
+        title: "Strict Human-in-the-Loop State Machine",
+        rationale:
+          "Autonomous recommendations cannot execute without explicit human approval. Approval timestamps expire after 5 minutes, rejected plans are permanently blocked, and executions are serialized to prevent race conditions.",
+      },
+    ],
+    challenges: [
+      {
+        problem: "Simulated outcomes diverging from predicted gain due to shared stock pool depletion.",
+        resolution:
+          "Hardened the M4 simulation loop to enforce SKU-level shared inventory pools, dynamically capping realized revenue when inventory runs out during the 3-day horizon.",
+      },
+      {
+        problem: "Confidence weight runaway from compounding retries.",
+        resolution:
+          "Bound confidence updates strictly to the recommendation's approval snapshot, decoupling simulation retry from model weight updates and enforcing +/-0.08 step caps within [0.30, 0.95].",
+      },
+    ],
+    verification: {
+      framework: "Vitest 2.1 (5 test files, 86 unit & integration tests)",
+      metrics: "86/86 tests passing in 2.55s, 0 failed, 0 skipped",
+      verifiedOn: "Node 22 / Node 24 runtime & local build verification",
+      notes:
+        "Tests verify log-log beta curve fitting, stockout donorship caps, human approval state machine transitions, mulberry32 simulation bounds, and dataset independence across leap years.",
     },
   },
 ];

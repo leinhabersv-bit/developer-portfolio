@@ -5,6 +5,7 @@ describe("Projects Data Integrity & Verification Standard", () => {
   it("contains verified projects with public open source evidence", () => {
     const slugs = PROJECTS.map((p) => p.slug);
     expect(slugs).toContain("champ-virtual-physics-lab");
+    expect(slugs).toContain("adapt-dqps-engine");
     expect(slugs).toContain("panic-delivery");
     expect(slugs).toContain("clientlaunch");
     expect(slugs).toContain("mic-learning-path");
@@ -13,6 +14,18 @@ describe("Projects Data Integrity & Verification Standard", () => {
     // Must NOT feature duplicates or uncredited forks as original work
     expect(slugs).not.toContain("unicc");
     expect(slugs).not.toContain("mic-learning-path01");
+  });
+
+  it("ensures adapt-dqps-engine has verified 6-member team attribution and 86 tests", () => {
+    const adapt = PROJECTS.find((p) => p.slug === "adapt-dqps-engine");
+    expect(adapt).toBeDefined();
+    expect(adapt?.team).toBeDefined();
+    expect(adapt?.team?.size).toBe(6);
+    expect(adapt?.team?.name).toBe("Team M.A.R.K.A.N");
+    expect(adapt?.team?.attribution).toBe("Built collaboratively by Team M.A.R.K.A.N — 6 Team Members");
+    expect(adapt?.role).toBe("Team Contributor / Collaborative Developer");
+    expect(adapt?.githubUrl).toBe("https://github.com/Bot25692/dqps-engine");
+    expect(adapt?.metrics.find((m) => m.label === "Automated Tests")?.value).toBe("86/86");
   });
 
   it("ensures every project has a unique slug and required metadata", () => {

@@ -18,6 +18,7 @@ import {
   QuantumTunnelingSimulator,
   KinematicDriftSimulator,
   DagProgressionSimulator,
+  AdaptBudgetDecisionSimulator,
 } from "@/components/InteractiveSimulators";
 
 interface PageProps {
@@ -143,6 +144,33 @@ export default async function CaseStudyPage({ params }: PageProps) {
             </span>
           )}
         </div>
+
+        {/* Collaborative Team Attribution Banner (Prominent 6-Member Attribution) */}
+        {project.team && (
+          <div className="mt-8 p-5 rounded-2xl border border-cyan-primary/30 bg-cyan-primary/[0.04] backdrop-blur-sm space-y-3">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-cyan-primary/15 pb-3">
+              <div className="flex items-center gap-3">
+                <span className="w-8 h-8 rounded-lg bg-cyan-primary/15 border border-cyan-primary/30 flex items-center justify-center font-mono text-xs font-bold text-cyan-primary">
+                  6P
+                </span>
+                <div>
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-primary font-bold block">
+                    Collaborative Team Project // {project.team.name}
+                  </span>
+                  <span className="text-sm font-semibold text-white block">
+                    {project.team.attribution}
+                  </span>
+                </div>
+              </div>
+              <div className="text-xs font-mono text-text-dim">
+                My Role: <span className="text-white font-semibold">{project.team.role}</span>
+              </div>
+            </div>
+            <p className="text-xs text-text-muted leading-relaxed font-sans">
+              Developed collaboratively by Team M.A.R.K.A.N for DataQuest 3.0 (DQPS Problem). All algorithmic decisions, simulation loops, and UI architecture were built through team cooperation, with individual focus on runtime persistence, integration hardening, decision state machines, and testing.
+            </p>
+          </div>
+        )}
       </header>
 
       {/* Verified Metrics Strip */}
@@ -172,6 +200,18 @@ export default async function CaseStudyPage({ params }: PageProps) {
             </h3>
           </div>
           <QuantumTunnelingSimulator />
+        </section>
+      )}
+
+      {project.slug === "adapt-dqps-engine" && (
+        <section className="space-y-4">
+          <div className="flex items-center gap-2">
+            <FlaskConical className="w-4 h-4 text-cyan-primary" />
+            <h3 className="font-mono text-xs uppercase tracking-widest text-cyan-primary">
+              Live In-Situ Decision Engine Simulator (DataQuest 3.0)
+            </h3>
+          </div>
+          <AdaptBudgetDecisionSimulator />
         </section>
       )}
 

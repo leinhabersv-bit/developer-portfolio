@@ -24,6 +24,15 @@ describe("Component Tests", () => {
     expect(screen.getByText("10/10")).toBeInTheDocument();
   });
 
+  it("renders ProjectCard for A.D.A.P.T. with prominent 6-member team badge and metrics", () => {
+    const adapt = PROJECTS.find((p) => p.slug === "adapt-dqps-engine")!;
+    render(<ProjectCard project={adapt} />);
+
+    expect(screen.getByText("A.D.A.P.T. — Autonomous Advertising Decision Engine")).toBeInTheDocument();
+    expect(screen.getByText("Built collaboratively by Team M.A.R.K.A.N — 6 Team Members")).toBeInTheDocument();
+    expect(screen.getByText("86/86")).toBeInTheDocument();
+  });
+
   it("handles CopyButton click and updates state", async () => {
     // Mock clipboard
     Object.assign(navigator, {

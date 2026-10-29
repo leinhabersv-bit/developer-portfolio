@@ -439,3 +439,335 @@ export function DagProgressionSimulator() {
     </div>
   );
 }
+
+// ==========================================
+// 4. A.D.A.P.T. AUTONOMOUS DECISION SIMULATOR
+// ==========================================
+export function AdaptBudgetDecisionSimulator() {
+  const [marginRate, setMarginRate] = useState(0.61); // 61%
+  const [currentSpend, setCurrentSpend] = useState(25000); // INR
+  const [beta, setBeta] = useState(0.70); // Return curve power
+  const [runwayDays, setRunwayDays] = useState(4.2); // Inventory runway in days
+  const [roas, setRoas] = useState(4.1); // Observed ROAS
+
+  // Decision workflow state machine: 'pending' | 'approved' | 'rejected' | 'simulated'
+  const [workflowState, setWorkflowState] = useState<"pending" | "approved" | "rejected" | "simulated">("pending");
+  const [confidence, setConfidence] = useState(0.75); // Starting confidence 75%
+  const [simResult, setSimResult] = useState<{
+    predictedGain: number;
+    simulatedGain: number;
+    errorPct: number;
+    newConfidence: number;
+  } | null>(null);
+
+  // Closed-form calculations
+  const breakEvenRoas = 1 / Math.max(0.01, marginRate);
+  const marginalProfitPerRupee = marginRate * beta * roas - 1;
+  const isStockRisk = runwayDays < 5.0;
+  const isForcedDonor = runwayDays < 3.0;
+
+  // Decision recommendation logic
+  let recommendationAction: string;
+  let recommendedSpend: number;
+  let recommendationBadge: string;
+  let badgeColor: string;
+
+  if (isForcedDonor) {
+    recommendationAction = "CRITICAL DONOR: Cut budget to floor to prevent complete stockout";
+    recommendedSpend = Math.round(currentSpend * 0.35); // -65% cut
+    recommendationBadge = "FORCED DONOR (<3d Stock)";
+    badgeColor = "text-rose-400 border-rose-500/30 bg-rose-500/10";
+  } else if (isStockRisk) {
+    recommendationAction = "STOCK WARNING: High ROAS does not justify scale without inventory cover";
+    recommendedSpend = currentSpend; // Held neutral
+    recommendationBadge = "STOCK WARNING (<5d Stock)";
+    badgeColor = "text-amber-400 border-amber-500/30 bg-amber-500/10";
+  } else if (marginalProfitPerRupee > 0) {
+    recommendationAction = "ELIGIBLE RECEIVER: Marginal profit positive with safe inventory buffer";
+    recommendedSpend = Math.min(Math.round(currentSpend * 1.40), Math.round(currentSpend + 10000)); // +40% cap
+    recommendationBadge = "GROWTH RECEIVER (+40% Cap)";
+    badgeColor = "text-cyan-primary border-cyan-primary/30 bg-cyan-primary/10";
+  } else {
+    recommendationAction = "UNPROFITABLE: Marginal profit negative; reallocate spend elsewhere";
+    recommendedSpend = Math.round(currentSpend * 0.70); // -30% normal donor cap
+    recommendationBadge = "BUDGET DONOR (-30% Cap)";
+    badgeColor = "text-violet-primary border-violet-primary/30 bg-violet-primary/10";
+  }
+
+  const handleApprove = () => {
+    setWorkflowState("approved");
+  };
+
+  const handleReject = () => {
+    setWorkflowState("rejected");
+    setSimResult(null);
+  };
+
+  const handleSimulate = () => {
+    // 3-day simulation with locked M4 formula:
+    // hidden beta in [0.8, 1.2]*beta, 8% noise, 1-day 50% ramp
+    const deltaSpend = recommendedSpend - currentSpend;
+    const predictedDailyGain = Math.round(marginRate * (deltaSpend * roas) - deltaSpend);
+    const predictedGain3Day = Math.max(0, predictedDailyGain * 3);
+
+    // Simulated actual with variance & stock cap
+    const noiseFactor = 0.92 + Math.random() * 0.16; // 8% noise
+    const stockFulfillCap = Math.max(0.3, Math.min(1.0, runwayDays / 7.0));
+    const simulatedGain3Day = Math.round(predictedGain3Day * noiseFactor * stockFulfillCap * (0.85 + Math.random() * 0.3));
+
+    // Prediction percentage error
+    const absPredicted = Math.max(1, Math.abs(predictedGain3Day));
+    const errorFraction = (simulatedGain3Day - predictedGain3Day) / absPredicted;
+    const errorPct = Math.round(Math.abs(errorFraction) * 100);
+
+    // Locked M5 confidence formula: c_new = c + 0.3 * (accuracy - c), step capped at +/-0.08, clamped to [0.30, 0.95]
+    const accuracy = Math.max(0, 1 - Math.abs(errorFraction));
+    const rawStep = 0.3 * (accuracy - confidence);
+    const cappedStep = Math.max(-0.08, Math.min(0.08, rawStep));
+    const nextConfidence = Number(Math.max(0.30, Math.min(0.95, confidence + cappedStep)).toFixed(3));
+
+    setConfidence(nextConfidence);
+    setSimResult({
+      predictedGain: predictedGain3Day,
+      simulatedGain: simulatedGain3Day,
+      errorPct,
+      newConfidence: nextConfidence,
+    });
+    setWorkflowState("simulated");
+  };
+
+  const handleReset = () => {
+    setWorkflowState("pending");
+    setSimResult(null);
+    setConfidence(0.75);
+  };
+
+  return (
+    <div className="p-6 rounded-2xl border border-white/10 bg-[#070b14] space-y-6">
+      {/* Header telemetry */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-4">
+        <div>
+          <span className="font-mono text-xs text-cyan-primary tracking-wider uppercase block">
+            A.D.A.P.T. Closed-Loop Decision Engine // DataQuest 3.0
+          </span>
+          <span className="text-xs text-text-dim block mt-0.5">
+            Team M.A.R.K.A.N — 6 Contributors • Pure TypeScript Analytical Solvers
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className={`px-2.5 py-1 rounded text-[11px] font-mono border ${badgeColor}`}>
+            {recommendationBadge}
+          </span>
+          <button
+            onClick={handleReset}
+            className="p-1.5 rounded-lg border border-white/10 text-text-dim hover:text-white transition-colors"
+            title="Reset Simulator"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+
+      {/* Sliders Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="space-y-1.5 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+          <div className="flex justify-between text-xs font-mono">
+            <span className="text-text-muted">Margin Rate (m)</span>
+            <span className="text-cyan-primary font-bold">{(marginRate * 100).toFixed(0)}%</span>
+          </div>
+          <input
+            type="range"
+            min="0.30"
+            max="0.80"
+            step="0.01"
+            value={marginRate}
+            onChange={(e) => {
+              setMarginRate(parseFloat(e.target.value));
+              if (workflowState === "simulated") setWorkflowState("approved");
+            }}
+            className="w-full accent-cyan-primary"
+          />
+          <span className="text-[10px] font-mono text-text-dim block">
+            Break-Even ROAS: {breakEvenRoas.toFixed(2)}x
+          </span>
+        </div>
+
+        <div className="space-y-1.5 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+          <div className="flex justify-between text-xs font-mono">
+            <span className="text-text-muted">Daily Spend (s₀)</span>
+            <span className="text-white font-bold">₹{currentSpend.toLocaleString("en-IN")}</span>
+          </div>
+          <input
+            type="range"
+            min="5000"
+            max="50000"
+            step="1000"
+            value={currentSpend}
+            onChange={(e) => {
+              setCurrentSpend(parseInt(e.target.value));
+              if (workflowState === "simulated") setWorkflowState("approved");
+            }}
+            className="w-full accent-cyan-primary"
+          />
+          <span className="text-[10px] font-mono text-text-dim block">
+            Projected Rec: ₹{recommendedSpend.toLocaleString("en-IN")}
+          </span>
+        </div>
+
+        <div className="space-y-1.5 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+          <div className="flex justify-between text-xs font-mono">
+            <span className="text-text-muted">Stock Runway</span>
+            <span className={`font-bold ${isForcedDonor ? "text-rose-400" : isStockRisk ? "text-amber-400" : "text-emerald-400"}`}>
+              {runwayDays.toFixed(1)} Days
+            </span>
+          </div>
+          <input
+            type="range"
+            min="1.0"
+            max="14.0"
+            step="0.2"
+            value={runwayDays}
+            onChange={(e) => {
+              setRunwayDays(parseFloat(e.target.value));
+              if (workflowState === "simulated") setWorkflowState("approved");
+            }}
+            className="w-full accent-cyan-primary"
+          />
+          <span className="text-[10px] font-mono text-text-dim block">
+            {runwayDays < 3 ? "Below 3d cut limit" : runwayDays < 5 ? "Under 5d warning" : "Safe >7d buffer"}
+          </span>
+        </div>
+
+        <div className="space-y-1.5 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+          <div className="flex justify-between text-xs font-mono">
+            <span className="text-text-muted">Observed ROAS</span>
+            <span className="text-white font-bold">{roas.toFixed(1)}x</span>
+          </div>
+          <input
+            type="range"
+            min="1.5"
+            max="6.0"
+            step="0.1"
+            value={roas}
+            onChange={(e) => {
+              setRoas(parseFloat(e.target.value));
+              if (workflowState === "simulated") setWorkflowState("approved");
+            }}
+            className="w-full accent-cyan-primary"
+          />
+          <span className="text-[10px] font-mono text-text-dim block">
+            Marginal Profit: ₹{marginalProfitPerRupee.toFixed(2)} / ₹
+          </span>
+        </div>
+      </div>
+
+      {/* Decision Summary Card */}
+      <div className="p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] space-y-3">
+        <div className="flex items-center justify-between text-xs font-mono">
+          <span className="text-text-dim">RECOMMENDATION ACTION</span>
+          <span className="text-cyan-primary font-bold">
+            Spend Move: {recommendedSpend > currentSpend ? "+" : ""}
+            ₹{(recommendedSpend - currentSpend).toLocaleString("en-IN")}/day
+          </span>
+        </div>
+        <p className="text-sm text-white font-mono leading-relaxed">
+          {recommendationAction}
+        </p>
+      </div>
+
+      {/* Human-in-the-Loop State Machine Controls */}
+      <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-white/[0.08]">
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-mono text-text-dim">Decision State:</span>
+          <span
+            className={`px-2.5 py-1 rounded text-xs font-mono font-bold uppercase tracking-wider ${
+              workflowState === "simulated"
+                ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
+                : workflowState === "approved"
+                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40"
+                : workflowState === "rejected"
+                ? "bg-rose-500/20 text-rose-400 border border-rose-500/40"
+                : "bg-amber-500/10 text-amber-300 border border-amber-500/30"
+            }`}
+          >
+            {workflowState}
+          </span>
+          <span className="text-xs font-mono text-text-dim">
+            Model Confidence: <span className="text-cyan-primary font-bold">{(confidence * 100).toFixed(1)}%</span>
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {workflowState === "pending" && (
+            <>
+              <button
+                onClick={handleReject}
+                className="px-3.5 py-1.5 rounded-lg border border-rose-500/30 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 text-xs font-mono transition-colors"
+              >
+                Reject Plan
+              </button>
+              <button
+                onClick={handleApprove}
+                className="px-4 py-1.5 rounded-lg bg-cyan-primary text-[#06080d] hover:bg-cyan-primary/90 text-xs font-mono font-bold transition-all shadow-[0_0_15px_rgba(0,245,212,0.3)]"
+              >
+                Approve Recommendation
+              </button>
+            </>
+          )}
+
+          {workflowState === "approved" && (
+            <button
+              onClick={handleSimulate}
+              className="px-4 py-1.5 rounded-lg bg-emerald-500 text-[#06080d] hover:bg-emerald-400 text-xs font-mono font-bold transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center gap-1.5"
+            >
+              <Zap className="w-3.5 h-3.5" />
+              <span>Simulate 3-Day Horizon</span>
+            </button>
+          )}
+
+          {workflowState === "simulated" && (
+            <button
+              onClick={handleReset}
+              className="px-3.5 py-1.5 rounded-lg border border-white/20 bg-white/[0.04] text-white hover:bg-white/[0.08] text-xs font-mono transition-colors"
+            >
+              Replay Next Cycle
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Simulation Result & Calibration Feedback */}
+      {simResult && (
+        <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-950/20 space-y-2 animate-fadeIn">
+          <div className="flex justify-between items-center text-xs font-mono">
+            <span className="text-emerald-400 font-bold uppercase tracking-wider">
+              3-Day Hidden-World Simulation Outcome
+            </span>
+            <span className="text-text-dim">M5 Error Calibration</span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1 text-xs font-mono">
+            <div>
+              <span className="text-text-dim block">Predicted Gain (3d)</span>
+              <span className="text-white font-bold">₹{simResult.predictedGain.toLocaleString("en-IN")}</span>
+            </div>
+            <div>
+              <span className="text-text-dim block">Simulated Actual</span>
+              <span className="text-emerald-300 font-bold">₹{simResult.simulatedGain.toLocaleString("en-IN")}</span>
+            </div>
+            <div>
+              <span className="text-text-dim block">Prediction Error</span>
+              <span className="text-amber-300 font-bold">{simResult.errorPct}%</span>
+            </div>
+            <div>
+              <span className="text-text-dim block">Updated Confidence</span>
+              <span className="text-cyan-primary font-bold">{(simResult.newConfidence * 100).toFixed(1)}%</span>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+

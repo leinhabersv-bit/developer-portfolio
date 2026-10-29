@@ -18,6 +18,7 @@ describe("Routing & SEO Generators", () => {
     expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/clientlaunch");
     expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/mic-learning-path");
     expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/developer-portfolio");
+    expect(urls).toContain("https://developer-portfolio-eta-steel.vercel.app/work/adapt-dqps-engine");
   });
 
   it("generates compliant robots directives", () => {

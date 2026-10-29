@@ -69,6 +69,13 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
             {project.subtitle}
           </p>
 
+          {project.team && (
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-cyan-primary/10 border border-cyan-primary/30 text-cyan-primary">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-primary" />
+              <span>{project.team.attribution}</span>
+            </div>
+          )}
+
           <p className="text-sm text-text-muted leading-relaxed line-clamp-3">
             {project.summary}
           </p>
